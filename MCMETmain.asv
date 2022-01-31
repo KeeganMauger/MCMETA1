@@ -48,12 +48,9 @@ hold on
 % end
 k = 0 + (200-0).*rand(1,1);
 l = 0 + (100-0).*rand(1,1);
-N = 10;
 
 for i=1:N
-    for j = 1:N
-        
-    end
+    
 end
 
 m = magic(10);
