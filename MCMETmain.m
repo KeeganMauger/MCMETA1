@@ -27,7 +27,9 @@ C.c = 299792458;                    % speed of light
 C.g = 9.80665;                      % metres (32.1740 ft) per s²
 C.m_n = 0.26 * C.m_0;               % effective electron mass
 C.am = 1.66053892e-27;              % atomic mass unit
+C.t = 300;                          % temperature
 
+temp = 300;
 
 rectangle('Position',[0 0 200 100])
 hold on
@@ -46,29 +48,51 @@ hold on
 %     end
 %     j = j+1;
 % end
-k = 0 + (200-0).*rand(1,1);
-l = 0 + (100-0).*rand(1,1);
-N = 10;
+% k = 0 + (200-0).*rand(1,1);
+% l = 0 + (100-0).*rand(1,1);
 
-for i=1:N
-    for j = 1:N
-        
+%--------------------------------------------------------------------------
+% Initializing Positions
+%--------------------------------------------------------------------------
+
+
+N = 10;
+i = 0;
+j = 0;
+k = 0;
+l = 0;
+
+for j=1:N
+    for i = 1:N
+        m(i,j) = 0 + (200-0).*rand(1,1);
+        n(i,j) = 0 + (100-0).*rand(1,1);
     end
 end
 
-m = magic(10);
-n = (magic(10) + magic(10));
-i = 0;
-j = 0;
-N = 10;
-
-for j=1:N
+for k=1:N
     
-    for i=1:N
-        r = n(i,j);
-        s = m(i,j);
-        plot(r,s,'b.')
+    for l=1:N
+
+        plot(m(l,k),n(l,k),'b.')
         hold on
+    end
+end
+
+% Thermal Velocity and Direction
+
+vth = sqrt(C.kb * temp / C.m_n);
+vx = zeros(N);
+vy = zeros(N);
+theta = zeros(N);
+
+r = 0;
+s = 0;
+
+for s=1:N;
+    for r=1:N
+        vx(r,s) = vth;
+        vy(r,s) = vth;
+        theta(r,s) = 0 + (359-0).*rand(1,1);
     end
 end
 
