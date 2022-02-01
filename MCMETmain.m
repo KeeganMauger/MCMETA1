@@ -13,7 +13,7 @@ set(0,'defaultaxesfontsize',20)
 set(0,'defaultaxesfontname','Times New Roman')
 set(0,'DefaultLineLineWidth', 2);
 
-%run WC
+run WC
 global C
 
 C.q_0 = 1.60217653e-19;             % electron charge
@@ -27,10 +27,11 @@ C.c = 299792458;                    % speed of light
 C.g = 9.80665;                      % metres (32.1740 ft) per s²
 C.m_n = 0.26 * C.m_0;               % effective electron mass
 C.am = 1.66053892e-27;              % atomic mass unit
-C.T = 300;                          % temperature
+C.t = 300;                          % temperature
 
 temp = 300;
 
+subplot(2,1,1);
 rectangle('Position',[0 0 200e-9 100e-9])
 hold on
 
@@ -46,6 +47,7 @@ j = 0;
 for i=1:N
     px(i) = 0 + (200e-9 - 0).*rand(1,1);
     py(i) = 0 + (100e-9 - 0).*rand(1,1);
+    subplot(2,1,1);
     plot(px(i),py(i),'b.')
     hold on
 end
@@ -75,10 +77,12 @@ end
 % so time step will be 1.3224e14 steps/s
 % or 7.56e-15 s/step, approximate to 1e-14 s/step
 
+
 t = 0;
 dt = 1e-14;     % time step
 px_prev = 0;
 py_prev = 0;
+T_prev = 0;
 
 for t=2:1000
     for k=1:N
@@ -90,12 +94,36 @@ for t=2:1000
         if py(k) >= 100e-9 || py(k) <= 0
             [theta(k),vx(k),vy(k)] = SpecRef(theta(k),vx(k),vy(k));
         end
+        if px(k) >= 200e-9
+            px(k) = 0;
+        elseif px(k) <= 0
+            px(k) = 200e-9;
+        else
+            px(k) = px(k);
+        end
         
+        v(k) = sqrt(vx(k)^2 + vy(k)^2);
+        v2(k) = v(k).*v(k);
+        
+        subplot(2,1,1);
         plot(px(k),py(k),'b.')
         hold on
     end
+    
+    KE = 0.5 * C.m_n * mean(v2);
+    KEtot = KE * N;
+    %T_prev(t-1) = T;
+    T(t-1) = KEtot / N / C.kb;
+    subplot(2,1,2);
+    plot(t-1, T, 'b.')
+    hold on
+    
     pause(0.1)
 end
+
+
+% Temperature
+
 
 
 
