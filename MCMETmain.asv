@@ -31,75 +31,49 @@ C.t = 300;                          % temperature
 
 temp = 300;
 
-rectangle('Position',[0 0 200 100])
+rectangle('Position',[0 0 200e-9 100e-9])
 hold on
-% Initialize particle positions
-
-% i = 0;
-% j = 0;
-% N = 9;
-% r = -1e-8;
-% s = 1e-8;
-% 
-% for j=1:N
-%     
-%     for i = 1:N
-%         plot(((j*10^-8)*2)+(r + (s - r).*rand(1,1)),((i*10^-8)+(r + (s - r).*rand(1,1))),'b.')
-%     end
-%     j = j+1;
-% end
-% k = 0 + (200-0).*rand(1,1);
-% l = 0 + (100-0).*rand(1,1);
 
 %--------------------------------------------------------------------------
 % Initializing Positions
 %--------------------------------------------------------------------------
 
 
-N = 10;
+N = 100;        % Number of electrons
 i = 0;
 j = 0;
-k = 0;
-l = 0;
 
-for j=1:N
-    for i = 1:N
-        m(i,j) = 0 + (200-0).*rand(1,1);
-        n(i,j) = 0 + (100-0).*rand(1,1);
-    end
-end
-
-for k=1:N
-    
-    for l=1:N
-
-        plot(m(l,k),n(l,k),'b.')
-        hold on
-    end
+for i=1:N
+    px(i) = 0 + (200e-9 - 0).*rand(1,1);
+    py(i) = 0 + (100e-9 - 0).*rand(1,1);
+    plot(px(i),py(i),'b.')
+    hold on
 end
 
 % Thermal Velocity and Direction
 
 vth = sqrt(C.kb * temp / C.m_n);
-vx = zeros(N);
-vy = zeros(N);
 
-r = 0;
-s = 0;
-
-for s=1:N;
-    for r=1:N
-        vx(r,s) = vth;
-        vy(r,s) = vth;
-    end
+for j=1:N
+    v0(j) = vth;                                % Velocity of electron
+    theta(j) = 0 + (359 - 0).*rand(1,1);        % Angle of electron
+    vx(j) = v0(j)*cos(theta(j));                % Velocity in x axis
+    vy(j) = v0(j)*sin(theta(j));                % Velocity in y axis
 end
+% 
 
-u = 0;
-v = 0;
+%--------------------------------------------------------------------------
+% Updating particle locations using velocity and angle
+%--------------------------------------------------------------------------
+% Want to choose a time step so that an electron can cover 1/100th of the
+% region in that time
+% starting velocity = 1.3224e5 m/s
+% spacial step = 100e-9/100 = 100e-11 m
+% so time step will be 1.3224e14 steps/s
+% will approximate to 1e14 steps/s
 
-for u=1:N;
-    theta
-
+t = 0;
+dt = 
 
 
 
