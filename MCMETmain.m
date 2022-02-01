@@ -13,7 +13,7 @@ set(0,'defaultaxesfontsize',20)
 set(0,'defaultaxesfontname','Times New Roman')
 set(0,'DefaultLineLineWidth', 2);
 
-run WC
+%run WC
 global C
 
 C.q_0 = 1.60217653e-19;             % electron charge
@@ -27,7 +27,7 @@ C.c = 299792458;                    % speed of light
 C.g = 9.80665;                      % metres (32.1740 ft) per s²
 C.m_n = 0.26 * C.m_0;               % effective electron mass
 C.am = 1.66053892e-27;              % atomic mass unit
-C.t = 300;                          % temperature
+C.T = 300;                          % temperature
 
 temp = 300;
 
@@ -56,7 +56,10 @@ vth = sqrt(C.kb * temp / C.m_n);
 
 for j=1:N
     v0(j) = vth;                                % Velocity of electron
-    theta(j) = 0 + (359 - 0).*rand(1,1);        % Angle of electron
+    theta(j) = 0 + (360 - 0).*rand(1,1);        % Angle of electron
+    if theta(j) == 360
+        theta(j) = 0;
+    end
     vx(j) = v0(j)*cos(theta(j));                % Velocity in x axis
     vy(j) = v0(j)*sin(theta(j));                % Velocity in y axis
 end
@@ -74,6 +77,25 @@ end
 
 t = 0;
 dt = 1e-14;     % time step
+px_prev = 0;
+py_prev = 0;
+
+for t=2:1000
+    for k=1:N
+        px_prev(k) = px(k);
+        px(k) = px(k) + vx(k)*dt;
+        py_prev(k) = py(k);
+        py(k) = py(k) + vy(k)*dt;
+        
+        if py(k) >= 100e-9 || py(k) <= 0
+            [theta(k),vx(k),vy(k)] = SpecRef(theta(k),vx(k),vy(k));
+        end
+        
+        plot(px(k),py(k),'b.')
+        hold on
+    end
+    pause(0.1)
+end
 
 
 

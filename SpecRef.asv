@@ -1,0 +1,23 @@
+function [angle_out, vx, vy] = SpecRef(angle_in, vx, vy)
+% Takes incoming angle and produces the reflected angle at the same
+% magnitude
+if angle_in > 0 && angle_in <= 90
+    angle_out = 360 - angle_in;
+    vx = vx;
+    vy = -vy;
+elseif angle_in > 90 && angle_in <= 180
+    angle_out = 180 + (180 - angle_in);
+    vx = vx;
+    vy = -vy;
+elseif angle_in > 180 && angle_in <= 270
+    angle_out = 180 - (angle_in - 180);
+    vx = vx;
+    vy = -vy;
+elseif angle_in > 270 && angle_in <= 360
+    angle_out = 0 + (360 - angle_in);
+    vx = vx;
+    vy = -vy;
+
+angle_out = angle_in;
+end
+
