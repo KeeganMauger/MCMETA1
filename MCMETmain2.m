@@ -72,9 +72,13 @@ dt = 1e-14;     % time step
 px_prev = 0;
 py_prev = 0;
 T_prev = 0;
+P_scat = 0;
 
 for t=2:100
     for k=1:N
+        
+        
+        
         px_prev(k) = px(k);
         px(k) = px(k) + vx(k)*dt;
         py_prev(k) = py(k);
