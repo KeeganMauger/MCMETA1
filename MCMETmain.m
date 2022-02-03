@@ -54,7 +54,7 @@ end
 
 % Thermal Velocity and Direction
 
-vth = sqrt(C.kb * temp / C.m_n);
+vth = sqrt(2*C.kb * temp / C.m_n);
 
 for j=1:N
     v0(j) = vth;                                % Velocity of electron
@@ -114,11 +114,10 @@ for t=2:100
     end
     
     KE = 0.5 * C.m_n * mean(v2);
-    KEtot = KE * N;
     T_prev = T;
-    T(t) = KEtot / N / C.kb;
+    T = KE /C.kb;
     subplot(2,1,2);
-    plot(t, T, 'b.')
+    plot([t-1 t], [T_prev T],'r')
     hold on
     
     pause(0.1)

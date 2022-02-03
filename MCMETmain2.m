@@ -22,7 +22,7 @@ C.g = 9.80665;                      % metres (32.1740 ft) per s²
 C.m_n = 0.26 * C.m_0;               % effective electron mass
 C.am = 1.66053892e-27;              % atomic mass unit
 C.T = 300;
-C.vth = sqrt(C.kb * C.T / C.m_n);
+C.vth = sqrt(2*C.kb * C.T / C.m_n);
 
 
 temp = C.T;
@@ -55,13 +55,16 @@ end
 vth = C.vth;
 
 for j=1:N
-    v0(j) = MaxBoltzDis();                                % Velocity of electron
-    theta(j) = 0 + (360 - 0).*rand(1,1);        % Angle of electron
-    if theta(j) == 360
-        theta(j) = 0;
-    end
-    vx(j) = v0(j)*cos(theta(j));                % Velocity in x axis
-    vy(j) = v0(j)*sin(theta(j));                % Velocity in y axis
+%     v0(j) = MaxBoltzDis();                                % Velocity of electron
+%     theta(j) = 0 + (360 - 0).*rand(1,1);        % Angle of electron
+%     if theta(j) == 360
+%         theta(j) = 0;
+%     end
+%     vx(j) = v0(j)*cos(theta(j));
+    vx(j) = (vth/sqrt(2))*randn();                            % Velocity in x axis
+    vy(j) = (vth/sqrt(2))*randn();
+    vth_calc(j) = sqrt(vx(j)^2 + vy(j)^2);
+    %vy(j) = v0(j)*sin(theta(j));                % Velocity in y axis
 end
 
 
@@ -85,7 +88,8 @@ for t=2:100
         py(k) = py(k) + vy(k)*dt;
         
         if py(k) >= 100e-9 || py(k) <= 0
-            [theta(k),vx(k),vy(k)] = SpecRef(theta(k),vx(k),vy(k));
+            %[theta(k),vx(k),vy(k)] = SpecRef(theta(k),vx(k),vy(k));
+            vy(k) = -vy(k);
         end
         if px(k) >= 200e-9
             px(k) = 0;
@@ -106,11 +110,11 @@ for t=2:100
     end
     
     KE = 0.5 * C.m_n * mean(v2);
-    KEtot = KE * N;
     T_prev = T;
-    T(t) = KEtot / N / C.kb;
+    T = KE / C.kb;
     subplot(2,1,2);
-    plot(t, T, 'b.')
+    %plot(t, T, 'b.')
+    plot([t-1 t], [T_prev T],'r')
     hold on
     
     pause(0.1)
