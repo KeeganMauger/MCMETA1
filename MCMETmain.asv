@@ -77,14 +77,15 @@ end
 % so time step will be 1.3224e14 steps/s
 % or 7.56e-15 s/step, approximate to 1e-14 s/step
 
-T = 0;
+
 t = 0;
+T(1) = 0;
 dt = 1e-14;     % time step
 px_prev = 0;
 py_prev = 0;
-T_prev = temp/2;
+T_prev = 0;
 
-for t=2:1000
+for t=2:100
     for k=1:N
         px_prev(k) = px(k);
         px(k) = px(k) + vx(k)*dt;
@@ -96,8 +97,10 @@ for t=2:1000
         end
         if px(k) >= 200e-9
             px(k) = 0;
+            px_prev(k) = px(k);
         elseif px(k) <= 0
             px(k) = 200e-9;
+            px_prev(k) = px(k);
         else
             px(k) = px(k);
         end
@@ -106,23 +109,22 @@ for t=2:1000
         v2(k) = v(k).*v(k);
         
         subplot(2,1,1);
-        plot(px(k),py(k),'b.')
+        plot([px_prev(k) px(k)],[py_prev(k) py(k)],'b')
         hold on
     end
     
     KE = 0.5 * C.m_n * mean(v2);
     KEtot = KE * N;
-    T_prev(t) = T(t);
+    T_prev = T;
     T(t) = KEtot / N / C.kb;
     subplot(2,1,2);
-    plot([t-1 t], [T_prev(t) T(t)), 'b')
+    plot(t, T, 'b.')
     hold on
     
     pause(0.1)
 end
 
 
-% Temperature
 
 
 

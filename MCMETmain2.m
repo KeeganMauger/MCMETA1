@@ -1,11 +1,5 @@
-% ELEC 4700
-% Assignment 1: Monte-Carlo Modeling of Electron Transport
-% Keegan Mauger
 
-% Bounding Area: 200nm x 100nm
 
-% rectangle('Position',[1 2 5 6])
-% axis([0 10 0 10])
 
 % Initialization
 set(0,'DefaultFigureWindowStyle','docked')
@@ -27,7 +21,9 @@ C.c = 299792458;                    % speed of light
 C.g = 9.80665;                      % metres (32.1740 ft) per s²
 C.m_n = 0.26 * C.m_0;               % effective electron mass
 C.am = 1.66053892e-27;              % atomic mass unit
-C.T = 300;                          % temperature
+C.T = 300;
+C.vth = sqrt(C.kb * C.T / C.m_n);
+
 
 temp = C.T;
 
@@ -52,12 +48,14 @@ for i=1:N
     hold on
 end
 
+%--------------------------------------------------------------------------
 % Thermal Velocity and Direction
+%--------------------------------------------------------------------------
 
-vth = sqrt(C.kb * temp / C.m_n);
+vth = C.vth;
 
 for j=1:N
-    v0(j) = vth;                                % Velocity of electron
+    v0(j) = MaxBoltzDis();                                % Velocity of electron
     theta(j) = 0 + (360 - 0).*rand(1,1);        % Angle of electron
     if theta(j) == 360
         theta(j) = 0;
@@ -65,17 +63,7 @@ for j=1:N
     vx(j) = v0(j)*cos(theta(j));                % Velocity in x axis
     vy(j) = v0(j)*sin(theta(j));                % Velocity in y axis
 end
-% 
 
-%--------------------------------------------------------------------------
-% Updating particle locations using velocity and angle
-%--------------------------------------------------------------------------
-% Want to choose a time step so that an electron can cover 1/100th of the
-% region in that time
-% starting velocity = 1.3224e5 m/s
-% spacial step = 100e-9/100 = 100e-11 m
-% so time step will be 1.3224e14 steps/s
-% or 7.56e-15 s/step, approximate to 1e-14 s/step
 
 
 t = 0;
@@ -123,15 +111,4 @@ for t=2:100
     
     pause(0.1)
 end
-
-
-
-
-
-
-
-
-
-
-
 
