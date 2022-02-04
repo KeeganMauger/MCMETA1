@@ -113,6 +113,7 @@ for t=2:100
         py_prev(k) = py(k);
         py(k) = py(k) + vy(k)*dt;
         
+        % Reflection on top and bottom borders
         if py(k) >= 100e-9 || py(k) <= 0
             %[theta(k),vx(k),vy(k)] = SpecRef(theta(k),vx(k),vy(k));
             vy(k) = -vy(k);
@@ -124,7 +125,7 @@ for t=2:100
             end
         end
         
-        
+        % Reflection on bottom of upper box
         if (py(k) >= 0.6e-7) && (0.8e-7 <= px(k) && px(k) <= 1.2e-7)
             if SPECDIFF_BOUND == 1
                 vx(k) = (vth/sqrt(2))*randn();
@@ -134,6 +135,7 @@ for t=2:100
             end
             py(k) = 0.6e-7;
         end
+        % Reflection on top of lower box
         if (py(k) <= 0.4e-7) && (0.8e-7 <= px(k) && px(k) <= 1.2e-7)
             if SPECDIFF_BOUND == 1
                 vx(k) = (vth/sqrt(2))*randn();
@@ -143,6 +145,7 @@ for t=2:100
             end
             py(k) = 0.4e-7;
         end
+        % Reflection on left of lower box
         if (0 <= py(k) && py(k) <= 0.4e-7) && (0.8e-7 <= px(k) && px(k) <= 1e-7)
             if SPECDIFF_BOUND == 1
                 vx(k) = (vth/sqrt(2))*randn();
@@ -152,6 +155,7 @@ for t=2:100
             end
             px(k) = 0.8e-7;
         end
+        % Reflection on right of lower box
         if (0 <= py(k) && py(k) <= 0.4e-7) && (1e-7 <= px(k) && px(k) <= 1.2e-7)
             if SPECDIFF_BOUND == 1
                 vx(k) = (vth/sqrt(2))*randn();
@@ -161,6 +165,7 @@ for t=2:100
             end
             px(k) = 1.2e-7;
         end
+        % Reflection on left of upper box
         if (0.6e-7 <= py(k) && py(k) <= 1e-7) && (0.8e-7 <= px(k) && px(k) <= 1e-7)
             if SPECDIFF_BOUND == 1
                 vx(k) = (vth/sqrt(2))*randn();
@@ -170,6 +175,7 @@ for t=2:100
             end
             px(k) = 0.8e-7;
         end
+        % Reflection on right of upper box
         if (0.6e-7 <= py(k) && py(k) <= 1e-7) && (1e-7 <= px(k) && px(k) <= 1.2e-7)
             if SPECDIFF_BOUND == 1
                 vx(k) = (vth/sqrt(2))*randn();
@@ -180,6 +186,7 @@ for t=2:100
             px(k) = 1.2e-7;
         end        
         
+        % X-axis transition
         if px(k) >= 200e-9
             px(k) = 0;
             px_prev(k) = px(k);

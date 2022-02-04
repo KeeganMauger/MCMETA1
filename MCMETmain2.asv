@@ -5,7 +5,7 @@
 set(0,'DefaultFigureWindowStyle','docked')
 set(0,'defaultaxesfontsize',20)
 set(0,'defaultaxesfontname','Times New Roman')
-set(0,'DefaultLineLineWidth', 2);
+set(0,'DefaultLineLineWidth', 0.5);
 
 run WC
 global C
@@ -68,9 +68,6 @@ for j=1:N
     %vy(j) = v0(j)*sin(theta(j));                % Velocity in y axis
 end
 
-figure(2)
-histogram(vth_calc,100)
-figure(1)
 
 t = 0;
 T(1) = 0;
@@ -90,8 +87,8 @@ T_prev = 0;
 for t=2:100
     for k=1:N
         
-        P_scat(k) = 1 - exp(-(ndt(k)/Tmn));
-        r = 1 + (200e-9 - 0).*rand(1,1);
+        P_scat(k) = 1 - exp(-(dt(k)/Tmn));
+        %r = 0.8 + (1 - 0.8).*rand(1,1);
         if P_scat(k) > rand()
             ndt(k) = dt;
             vx(k) = (vth/sqrt(2))*randn();
@@ -144,3 +141,7 @@ for t=2:100
     pause(0.01)
 end
 
+T_T_C = mean(ndt)
+MFP = mean(v)*mean(ndt)
+figure(2)
+histogram(vth_calc,10)

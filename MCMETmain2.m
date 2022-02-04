@@ -37,16 +37,16 @@ hold on
 %--------------------------------------------------------------------------
 
 
-N = 100;        % Number of electrons
+N = 1000;        % Number of electrons
 i = 0;
 j = 0;
 
 for i=1:N
     px(i) = 0 + (200e-9 - 0).*rand(1,1);
     py(i) = 0 + (100e-9 - 0).*rand(1,1);
-    subplot(2,1,1);
-    plot(px(i),py(i),'b.')
-    hold on
+%     subplot(2,1,1);
+%     plot(px(i),py(i),'b.')
+%     hold on
 end
 
 %--------------------------------------------------------------------------
@@ -83,14 +83,13 @@ px_prev = 0;
 py_prev = 0;
 T_prev = 0;
 
-
+sampleidx = randi(N,10,1);
 for t=2:100
     for k=1:N
         
-        P_scat(k) = 1 - exp(-(ndt(k)/Tmn));
+        P_scat(k) = 1 - exp(-(dt/Tmn));
         %r = 0.8 + (1 - 0.8).*rand(1,1);
         if P_scat(k) > rand()
-            ndt(k) = dt;
             vx(k) = (vth/sqrt(2))*randn();
             vy(k) = (vth/sqrt(2))*randn();
         else
@@ -125,9 +124,12 @@ for t=2:100
         v(k) = sqrt(vx(k)^2 + vy(k)^2);
         v2(k) = v(k).*v(k);
         
-        subplot(2,1,1);
-        plot([px_prev(k) px(k)],[py_prev(k) py(k)],'b')
-        hold on
+    end
+    for h=1:length(sampleidx)
+    subplot(2,1,1);
+        figure(2)
+        plot([px_prev(sampleidx(h)) px(sampleidx(h))],[py_prev(sampleidx(h)) py(sampleidx(h))],'SeriesIndex',h)
+        hold on 
     end
     
     KE = 0.5 * C.m_n * mean(v2);
