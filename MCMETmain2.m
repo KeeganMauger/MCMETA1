@@ -28,6 +28,7 @@ C.vth = sqrt(2*C.kb * C.T / C.m_n);
 temp = C.T;
 
 subplot(2,1,1);
+figure(1)
 rectangle('Position',[0 0 200e-9 100e-9])
 hold on
 
@@ -68,19 +69,33 @@ for j=1:N
 end
 
 
-
 t = 0;
 T(1) = 0;
 dt = 1e-14;     % time step
+
+for l=1:N           %Scattering time step
+    ndt(l) = dt;
+end
+P_scat = 0;
+Tmn = 0.2e-12;
+
 px_prev = 0;
 py_prev = 0;
 T_prev = 0;
-P_scat = 0;
+
 
 for t=2:100
     for k=1:N
         
-        
+        P_scat(k) = 1 - exp(-(ndt(k)/Tmn));
+        %r = 0.8 + (1 - 0.8).*rand(1,1);
+        if P_scat(k) > rand()
+            ndt(k) = dt;
+            vx(k) = (vth/sqrt(2))*randn();
+            vy(k) = (vth/sqrt(2))*randn();
+        else
+            ndt(k) = ndt(k) + dt;
+        end
         
         px_prev(k) = px(k);
         px(k) = px(k) + vx(k)*dt;
@@ -90,6 +105,12 @@ for t=2:100
         if py(k) >= 100e-9 || py(k) <= 0
             %[theta(k),vx(k),vy(k)] = SpecRef(theta(k),vx(k),vy(k));
             vy(k) = -vy(k);
+            if py(k) >= 100e-9
+                py(k) = 100e-9;
+            end
+            if py(k) <= 0
+                py(k) = 0;
+            end
         end
         if px(k) >= 200e-9
             px(k) = 0;
@@ -117,6 +138,8 @@ for t=2:100
     plot([t-1 t], [T_prev T],'r')
     hold on
     
-    pause(0.1)
+    pause(0.01)
 end
 
+figure(2)
+histogram(vth_calc,10)
