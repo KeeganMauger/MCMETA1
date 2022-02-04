@@ -31,6 +31,10 @@ subplot(2,1,1);
 figure(1)
 rectangle('Position',[0 0 200e-9 100e-9])
 hold on
+rectangle('Position',[0.8e-7 0 0.4e-7 0.4e-7])
+hold on
+rectangle('Position',[0.8e-7 0.6e-7 0.4e-7 0.4e-7])
+hold on
 
 %--------------------------------------------------------------------------
 % Initializing Positions
@@ -44,6 +48,7 @@ j = 0;
 for i=1:N
     px(i) = 0 + (200e-9 - 0).*rand(1,1);
     py(i) = 0 + (100e-9 - 0).*rand(1,1);
+    if 0.8e-7 <= px(i) <= 1.2 && 0 <= py(i) 
     subplot(2,1,1);
     plot(px(i),py(i),'b.')
     hold on
@@ -140,8 +145,3 @@ for t=2:100
     
     pause(0.01)
 end
-
-T_T_C = mean(ndt)
-MFP = mean(v)*mean(ndt)
-figure(2)
-histogram(vth_calc,10)
