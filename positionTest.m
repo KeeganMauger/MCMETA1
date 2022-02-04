@@ -20,8 +20,8 @@ j = 0;
 for i=1:N
     px(i) = 0 + (200e-9 - 0).*rand(1,1);
     py(i) = 0 + (100e-9 - 0).*rand(1,1);
-    while 0.8e-7 <= px(i) < 1.2e-7 && 0 <= py(i) < 0.4e-7 ||...  %Within block
-    0.8e-7 <= px(i) < 1.2e-7 && 0.6e-7 <= py(i) < 1e-7
+    while (0.8e-7 <= px(i) && px(i) < 1.2e-7) && (0 <= py(i) && py(i) < 0.4e-7) ||...  %Within block
+    (0.8e-7 <= px(i) && px(i) < 1.2e-7) && (0.6e-7 <= py(i) && py(i) < 1e-7)
         px(i) = 0 + (200e-9 - 0).*rand(1,1);
         py(i) = 0 + (100e-9 - 0).*rand(1,1);
     end

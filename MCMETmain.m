@@ -94,6 +94,11 @@ for t=2:100
         
         if py(k) >= 100e-9 || py(k) <= 0
             [theta(k),vx(k),vy(k)] = SpecRef(theta(k),vx(k),vy(k));
+            if py(k) >= 100e-9
+                py(k) = 100e-9;
+            elseif py(k) <= 0
+                py(k) = 0;
+            end
         end
         if px(k) >= 200e-9
             px(k) = 0;

@@ -5,7 +5,7 @@
 set(0,'DefaultFigureWindowStyle','docked')
 set(0,'defaultaxesfontsize',20)
 set(0,'defaultaxesfontname','Times New Roman')
-set(0,'DefaultLineLineWidth', 2);
+set(0,'DefaultLineLineWidth', 0.5);
 
 run WC
 global C

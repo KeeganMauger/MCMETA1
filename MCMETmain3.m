@@ -48,8 +48,8 @@ j = 0;
 for i=1:N
     px(i) = 0 + (200e-9 - 0).*rand(1,1);
     py(i) = 0 + (100e-9 - 0).*rand(1,1);
-    while 0.8e-7 <= px(i) < 1.2e-7 && 0 <= py(i) < 0.4e-7 ||...  %Within lower block
-    0.8e-7 <= px(i) < 1.2e-7 && 0.6e-7 <= py(i) < 1e-7
+    while (0.8e-7 <= px(i) && px(i) < 1.2e-7) && (0 <= py(i) && py(i) < 0.4e-7) ||...
+    (0.8e-7 <= px(i) && px(i) < 1.2e-7) && (0.6e-7 <= py(i) && py(i) < 1e-7)
         px(i) = 0 + (200e-9 - 0).*rand(1,1);
         py(i) = 0 + (100e-9 - 0).*rand(1,1);
     end
@@ -123,27 +123,27 @@ for t=2:100
         end
         
         
-        if py(k) >= 0.6e-7 && 0.8e-7 <= px(k) <= 1.2e-7
+        if (py(k) >= 0.6e-7) && (0.8e-7 <= px(k) && px(k) <= 1.2e-7)
             vy(k) = -vy(k);
             py(k) = 0.6e-7;
         end
-        if py(k) <= 0.4e-7 && 0.8e-7 <= px(k) <= 1.2e-7
+        if (py(k) <= 0.4e-7) && (0.8e-7 <= px(k) && px(k) <= 1.2e-7)
             vy(k) = -vy(k);
             py(k) = 0.4e-7;
         end
-        if 0 <= py(k) <= 0.4e-7 && 0.8e-7 <= px(k) < 1e-7
+        if (0 <= py(k) && py(k) <= 0.4e-7) && (0.8e-7 <= px(k) && px(k) < 1e-7)
             vx(k) = -vx(k);
             px(k) = 0.8e-7;
         end
-        if 0 <= py(k) <= 0.4e-7 && 1e-7 <= px(k) < 1.2e-7
+        if (0 <= py(k) && py(k) <= 0.4e-7) && (1e-7 <= px(k) && px(k) < 1.2e-7)
             vx(k) = -vx(k);
             px(k) = 1.2e-7;
         end
-        if 0.6e-7 <= py(k) <= 1e-7 && 0.8e-7 <= px(k) < 1e-7
+        if (0.6e-7 <= py(k) && py(k) <= 1e-7) && (0.8e-7 <= px(k) && px(k) < 1e-7)
             vx(k) = -vx(k);
             px(k) = 0.8e-7;
         end
-        if 0.6e-7 <= py(k) <= 1e-7 && 1e-7 <= px(k) < 1.2e-7
+        if (0.6e-7 <= py(k) && py(k) <= 1e-7) && (1e-7 <= px(k) && px(k) < 1.2e-7)
             vx(k) = -vx(k);
             px(k) = 1.2e-7;
         end        
