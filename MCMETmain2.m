@@ -7,7 +7,7 @@ set(0,'defaultaxesfontsize',20)
 set(0,'defaultaxesfontname','Times New Roman')
 set(0,'DefaultLineLineWidth', 0.5);
 
-run WC
+%run WC
 global C
 
 C.q_0 = 1.60217653e-19;             % electron charge
