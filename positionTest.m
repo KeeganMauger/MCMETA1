@@ -29,3 +29,5 @@ for i=1:N
     plot(px(i),py(i),'b.')
     hold on
 end
+
+T = zeros(3,N);

@@ -7,7 +7,7 @@ set(0,'defaultaxesfontsize',20)
 set(0,'defaultaxesfontname','Times New Roman')
 set(0,'DefaultLineLineWidth', 0.5);
 
-%run WC
+run WC
 global C
 
 C.q_0 = 1.60217653e-19;             % electron charge
@@ -126,8 +126,7 @@ for t=2:100
         
     end
     for h=1:length(sampleidx)
-    subplot(2,1,1);
-        figure(2)
+        subplot(2,1,1);
         plot([px_prev(sampleidx(h)) px(sampleidx(h))],[py_prev(sampleidx(h)) py(sampleidx(h))],'SeriesIndex',h)
         hold on 
     end

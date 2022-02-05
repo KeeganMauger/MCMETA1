@@ -223,7 +223,7 @@ E_map = [reshape(px,[N,1]),reshape(py,[N,1])];
 figure(2)
 hist3(E_map,'CDataMode','auto','FaceColor','interp')
 
-Nbins = 21;
+Nbins = 20;
 d = 1;
 u = 1;
 vtm = 0;
@@ -238,22 +238,50 @@ for e=1:Nbins
         for g=1:N
             if X(g) == e && Y(g) == f
                 vtm(d) = v(g);
-                vtm2(d) = vtm(d).*vtm(d);
                 d = d+1;
             end
         end
-    vbm2 = mean(vtm2);
+    vbm = mean(vtm);
+    vbm2 = vbm * vbm;
     d = 1;
-    T_map(e,f) = (0.5*C.m_n*vbm2)/C.kb;
+    T_map(e,f) = (0.5*C.m_n*
     end
 end
-
-[V,W] = meshgrid(0:1e-8:2e-7,0:0.5e-8:1e-7);
-figure(3)
-surf(V,W,T_map,'FaceColor','interp')
-
             
             
         
+
+
+% binToFind = [4 4];
+% [tf,loc] = ismember([X,Y],binToFind,'row');
+% idx = find(loc);
+
+
+% T_map = zeros(N,N);
+% for g = 1:N
+%     KE_fin(g) = 0.5 * C.m_n * v(g);
+%     T_fin(g) = KE_fin(g) / C.kb;
+% end
+% T_map(:,1) = reshape(px,[N,1]);
+% T_map(:,2) = reshape(py,[N,1]);
+% T_map(:,3) = reshape(T_fin,[N,1]);
+% 
+% x = T_map(:,1);
+% y = T_map(:,2);
+% z = T_map(:,3);
+% 
+% nx = length(sort(x));
+% ny = length(sort(y));
+% 
+% X = reshape(x,nx,ny);
+% Y = reshape(y,nx,ny);
+% Z = reshape(z,nx,ny);
+% 
+% 
+% 
+% 
+% figure(3)
+% pcolor(X,Y,Z)
+
 
 
